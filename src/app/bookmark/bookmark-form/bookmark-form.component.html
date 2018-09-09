@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-3">
+    <h2>Bookmark Form</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Site Name</label>
+        <input type="text" [(ngModel)]="name" class="form-control" name="name" />
+      </div>
+      <div class="form-group">
+        <label for="url">URL</label>
+        <input type="text" [(ngModel)]="url" class="form-control" name="url" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" [(ngModel)]="description" class="form-control" name="description" />
+      </div>
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" [(ngModel)]="tags" class="form-control" name="tags" />
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" [hidden]="update" (click)="addBookmark()">BOOKMARK ADD</button>
+        <button class="btn btn-primary" [hidden]="!update" (click)="updateBookmark()">BOOKMARK UPDATE</button>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-md-9">
+    <app-bookmark-list (updateBookmark)="onUpdate($event)"></app-bookmark-list>
+  </div>
+</div>
