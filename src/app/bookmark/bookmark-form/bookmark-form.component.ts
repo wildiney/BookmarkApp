@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookmarkService } from '../shared/bookmark.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bookmark-form',
@@ -13,10 +14,20 @@ export class BookmarkFormComponent implements OnInit {
   url: string;
   description: string;
   tags: string;
+  page;
 
-  constructor(private bookmarkService: BookmarkService) {}
+  constructor(private bookmarkService: BookmarkService, private route:ActivatedRoute) {
+    this.route.queryParamMap.subscribe(
+      params=>{
+        this.name = params.get('site');
+        this.url = params.get('url');
+        this.description = params.get('description');
+      }
+    );
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   addBookmark() {
     this.bookmarkService.add(this.name, this.url, this.description, this.tags);

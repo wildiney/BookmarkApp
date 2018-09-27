@@ -35,6 +35,20 @@ export class BookmarkService {
     );
   }
 
+  getDataWhere(){
+    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet',ref=> ref.where('tags','==','angular'));
+    return this.bmCollection.snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const data = a.payload.doc.data() as Bookmark;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        })
+      )
+    );
+
+  }
+
   add(name, url, description, tags) {
     this.afs.collection('bookmarklet').add({
       name: name,
