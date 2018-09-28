@@ -12,6 +12,7 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
 import { BookmarkListComponent } from './bookmark/bookmark-list/bookmark-list.component';
 import { BookmarkFormComponent } from './bookmark/bookmark-form/bookmark-form.component';
 import { BookmarkSearchComponent } from './bookmark/bookmark-search/bookmark-search.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const appRoutes:Routes = [
   {path:"", component:BookmarkListComponent, pathMatch:'full'},
@@ -34,7 +35,8 @@ const appRoutes:Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

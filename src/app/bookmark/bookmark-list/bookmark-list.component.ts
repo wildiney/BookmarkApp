@@ -33,7 +33,6 @@ export class BookmarkListComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.bookmarks = this.bookmarkService.getData();
   }
 

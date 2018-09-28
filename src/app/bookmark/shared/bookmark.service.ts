@@ -35,8 +35,8 @@ export class BookmarkService {
     );
   }
 
-  getDataWhere(){
-    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet',ref=> ref.where('tags','==','angular'));
+  getDataWhere(term){
+    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet',ref=> ref.where('tags','==',term));
     return this.bmCollection.snapshotChanges().pipe(
       map(actions =>
         actions.map(a => {
