@@ -17,19 +17,20 @@ export class BookmarkListComponent implements OnInit {
 
   bmCollection: AngularFirestoreCollection<Bookmark>;
   bookmarks: Observable<Bookmark[]>;
-  enableEditAndDelete: boolean= false;
+  enableEditAndDelete: boolean = false;
 
-  constructor(private bookmarkService: BookmarkService, private route:ActivatedRoute) {
-    this.route.queryParamMap.subscribe(
-      params=>{
-        let enable = params.get('enable');
-        if(enable == 'false' || enable=='' || enable==null){
-          this.enableEditAndDelete = false;
-        }else{
-          this.enableEditAndDelete = true;
-        }
+  constructor(
+    private bookmarkService: BookmarkService,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParamMap.subscribe(params => {
+      let enable = params.get('enable');
+      if (enable == 'false' || enable == '' || enable == null) {
+        this.enableEditAndDelete = false;
+      } else {
+        this.enableEditAndDelete = true;
       }
-    );
+    });
   }
 
   ngOnInit() {
@@ -42,5 +43,10 @@ export class BookmarkListComponent implements OnInit {
 
   delete(id) {
     this.bookmarkService.delete(id);
+  }
+
+  searchByTag(tag) {
+    this.bookmarks = this.bookmarkService.searchTag(tag);
+    console.log(tag);
   }
 }

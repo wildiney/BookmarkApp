@@ -23,7 +23,9 @@ export class BookmarkService {
   constructor(private afs: AngularFirestore) {}
 
   getData() {
-    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet');
+    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet', ref =>
+      ref.orderBy('name', 'asc')
+    );
     return this.bmCollection.snapshotChanges().pipe(
       map(actions =>
         actions.map(a => {
@@ -35,8 +37,13 @@ export class BookmarkService {
     );
   }
 
-  getDataWhere(term){
-    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet',ref=> ref.where('tags','==',term));
+  searchTag(term) {
+    this.bmCollection = this.afs.collection<Bookmark>('bookmarklet', ref =>
+      ref
+        .orderBy('name', 'asc')
+        .startAt(term)
+        .endAt(term + '\uf8ff')
+    );
     return this.bmCollection.snapshotChanges().pipe(
       map(actions =>
         actions.map(a => {
@@ -46,7 +53,6 @@ export class BookmarkService {
         })
       )
     );
-
   }
 
   add(name, url, description, tags) {
